@@ -1,0 +1,1107 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <title>LabDigital | Laboratorium R&D — Sistem Manajemen Laboratorium</title>
+  <meta name="description"
+    content="Sistem manajemen laboratorium digital untuk pemantauan instrumen, suhu, jobdesk, dan penerimaan sampel." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="index.css" />
+</head>
+
+<body>
+
+  <!-- ============================================================
+     LOGIN SCREEN
+     ============================================================ -->
+  <div class="login-screen" id="loginScreen">
+    <div class="login-bg-grid"></div>
+    <div class="login-container">
+      <!-- Left brand panel -->
+      <div class="login-left">
+        <div class="login-brand">
+          <div class="login-brand-logo">⚗️</div>
+          <div>
+            <div class="login-brand-name">LabDigital</div>
+            <div class="login-brand-sub">Laboratorium R&D</div>
+          </div>
+        </div>
+
+        <div class="login-tagline">
+          Sistem Manajemen Laboratorium<br>
+          <span>Terintegrasi &amp; Real-time</span>
+        </div>
+      </div>
+      <!-- Right login form -->
+      <div class="login-right">
+        <div class="login-title">Selamat Datang 👋</div>
+        <div class="login-sub">Masuk menggunakan NIK dan password Anda</div>
+        <form class="login-form" id="loginForm" autocomplete="on">
+          <div class="login-field">
+            <label>NIK Karyawan</label>
+            <input type="text" id="loginNIK" placeholder="Masukkan NIK…" required autocomplete="username" />
+          </div>
+          <div class="login-field">
+            <label>Password</label>
+            <div class="pass-wrap">
+              <input type="password" id="loginPass" placeholder="Password…" required autocomplete="current-password" />
+              <button type="button" class="pass-toggle" id="passToggle">👁</button>
+            </div>
+          </div>
+          <div class="login-error" id="loginError"></div>
+          <button type="submit" class="btn-login">🔐 Masuk ke Sistem</button>
+        </form>
+        <div class="login-divider">atau</div>
+        <a href="requester.html" class="btn-requester">📦 Portal Penerimaan Sampel (Requester)</a>
+        <div class="login-cred-hint">
+          <details>
+            <summary>🔑 Demo Credentials</summary>
+            <div class="cred-table">
+              <div class="cred-section">
+                <div class="cred-role">👨‍🔬 Analis</div>
+                <table>
+                  <tr>
+                    <th>Nama</th>
+                    <th>NIK</th>
+                    <th>Password</th>
+                  </tr>
+                  <tr>
+                    <td>Daffa Ardiyansyah</td>
+                    <td>ANA2024001</td>
+                    <td>DAFFA@123</td>
+                  </tr>
+                  <tr>
+                    <td>Bagus Suciantoro</td>
+                    <td>ANA2024002</td>
+                    <td>BAGUS@123</td>
+                  </tr>
+                  <tr>
+                    <td>Arip Y</td>
+                    <td>ANA2024003</td>
+                    <td>ARIP@123</td>
+                  </tr>
+                  <tr>
+                    <td>Fauziah Rahman</td>
+                    <td>ANA2024004</td>
+                    <td>FAUZI@123</td>
+                  </tr>
+                </table>
+              </div>
+              <div class="cred-section">
+                <div class="cred-role">🧑‍💼 Lab Technologist</div>
+                <table>
+                  <tr>
+                    <th>Nama</th>
+                    <th>NIK</th>
+                    <th>Password</th>
+                  </tr>
+                  <tr>
+                    <td>Afif Naufal</td>
+                    <td>LT2023001</td>
+                    <td>AFIF@123</td>
+                  </tr>
+                  <tr>
+                    <td>Dewi Y</td>
+                    <td>LT2023002</td>
+                    <td>DEWI@123</td>
+                  </tr>
+                  <tr>
+                    <td>Latifun J</td>
+                    <td>LT2023003</td>
+                    <td>LATIF@123</td>
+                  </tr>
+                  <tr>
+                    <td>Sukmo Wening</td>
+                    <td>LT2023004</td>
+                    <td>SUKMO@123</td>
+                  </tr>
+                  <tr>
+                    <td>Tri Nur H</td>
+                    <td>LT2023005</td>
+                    <td>TRI@123</td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+          </details>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================
+     MAIN APP
+     ============================================================ -->
+  <div class="app-root" id="mainApp" style="display:none;">
+
+    <!-- SIDEBAR -->
+    <nav class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <div class="logo">
+          <span class="logo-icon">⚗️</span>
+          <div>
+            <div class="logo-title">Lab R&D</div>
+            <span class="logo-sub">Laboratorium R&D</span>
+          </div>
+        </div>
+        <button class="sidebar-toggle" id="sidebarToggle">☰</button>
+      </div>
+
+      <div class="nav-menu">
+        <div class="nav-section-label">UTAMA</div>
+        <a href="#" class="nav-item active" data-page="dashboard"><span class="nav-icon">📊</span><span
+            class="nav-label">Dashboard</span></a>
+
+        <div class="nav-section-label">INSTRUMEN</div>
+        <a href="#" class="nav-item" data-page="instrumen"><span class="nav-icon">🔬</span><span
+            class="nav-label">Instrumen</span></a>
+
+        <div class="nav-section-label">MONITORING</div>
+        <a href="#" class="nav-item" data-page="suhu"><span class="nav-icon">🌡️</span><span class="nav-label">Suhu
+            Lingkungan</span></a>
+
+        <div class="nav-section-label">MANAJEMEN</div>
+        <a href="#" class="nav-item" data-page="jobdesk"><span class="nav-icon">📋</span><span class="nav-label">Jobdesk</span></a>
+        <a href="#" class="nav-item" data-page="sampel"><span class="nav-icon">🧪</span><span
+            class="nav-label">Penerimaan</span></a>
+        <a href="#" class="nav-item" data-page="riwayat"><span class="nav-icon">📜</span><span class="nav-label">Riwayat</span></a>
+      </div>
+
+      <div class="sidebar-footer">
+        <div class="user-info">
+          <div class="user-avatar" id="userAvatar">?</div>
+          <div>
+            <div class="user-name" id="userName">—</div>
+            <div class="user-role" id="userRoleLabel">—</div>
+          </div>
+        </div>
+        <button class="btn-logout" id="btnLogout">🚪 <span>Logout</span></button>
+      </div>
+    </nav>
+
+    <!-- MAIN CONTENT -->
+    <div class="main-content">
+      <!-- TOPBAR -->
+      <div class="topbar">
+        <div class="topbar-left">
+          <div class="page-title" id="pageTitle">Dashboard</div>
+          <div class="breadcrumb" id="breadcrumb">Dashboard</div>
+        </div>
+        <div class="topbar-right">
+          <div class="topbar-actions">
+            <!-- Lab Technologist only buttons -->
+            <a id="btnSheet" class="btn-secondary lt-only-btn" 
+               href="https://docs.google.com/spreadsheets/d/1kAkdMV_Z36lZCouHy6CLVq-0RsWvjVgFCAlOr_xAL98" 
+               target="_blank" style="display:none; padding: .4rem .75rem; font-size: .75rem;">📊 Data</a>
+            <button id="btnSync" class="btn-primary lt-only-btn" 
+                    style="display:none; padding: .4rem .75rem; font-size: .75rem; background: var(--blue);">🔄 Sync</button>
+          </div>
+          <span id="roleBadge" class="role-badge role-analyst">👨‍🔬 Analis</span>
+          <div class="clock-display" id="clockDisplay">—</div>
+          <!-- Topbar user dropdown -->
+          <div class="topbar-user" id="topbarUser" style="position:relative;cursor:pointer;margin-left:.5rem;">
+            <div class="user-avatar-top" id="topbarAvatar"
+              style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#A30115,#D0021B);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.75rem;color:#fff;border:2px solid #FDDDE1;">
+              ?</div>
+            <div class="topbar-dropdown" id="topbarDropdown"
+              style="display:none;position:absolute;right:0;top:calc(100% + 8px);background:#fff;border:1px solid #E2E8F0;border-radius:8px;box-shadow:0 8px 24px rgba(0,0,0,.12);min-width:200px;z-index:1000;overflow:hidden;">
+              <div style="padding:.85rem 1rem;border-bottom:1px solid #E2E8F0;">
+                <div style="font-weight:700;font-size:.85rem;" id="ddName">—</div>
+                <div style="font-size:.72rem;color:#718096;" id="ddRole">—</div>
+              </div>
+              <button onclick="doLogout()"
+                style="display:flex;align-items:center;gap:.6rem;width:100%;padding:.75rem 1rem;background:none;border:none;cursor:pointer;font-size:.82rem;color:#D0021B;font-family:inherit;font-weight:600;transition:background .2s;"
+                onmouseover="this.style.background='#FFF0F2'" onmouseout="this.style.background='none'">🚪 Keluar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ====================================================
+         PAGE: DASHBOARD
+         ==================================================== -->
+      <div class="page active" id="page-dashboard">
+
+        <!-- Analyst Reminder Banner (hidden by default, shown by JS) -->
+        <div class="analyst-reminder" id="analystReminder" style="display:none;">
+          <div class="reminder-icon">⚠️</div>
+          <div class="reminder-content">
+            <div class="reminder-title">Anda memiliki tugas yang belum diselesaikan!</div>
+            <div class="reminder-sub" id="reminderSub">Ada jobdesk yang masih pending. Segera selesaikan.</div>
+          </div>
+          <button class="reminder-btn" onclick="navigateTo('jobdesk')">Lihat Jobdesk →</button>
+        </div>
+
+        <!-- 6 Metrics Cards (Top Row) -->
+        <div class="stats-grid dashboard-stats-grid">
+          <div class="stat-card card-blue">
+            <div class="stat-icon">📑</div>
+            <div class="stat-info">
+              <div class="stat-number" id="dashTotalJobs">0</div>
+              <div class="stat-label">Total Jobs</div>
+            </div>
+          </div>
+          <div class="stat-card card-green">
+            <div class="stat-icon">✅</div>
+            <div class="stat-info">
+              <div class="stat-number" id="dashJobsDone">0</div>
+              <div class="stat-label">Jobs Done</div>
+            </div>
+          </div>
+          <div class="stat-card card-orange">
+            <div class="stat-icon">⚙️</div>
+            <div class="stat-info">
+              <div class="stat-number" id="dashJobsProgress">0</div>
+              <div class="stat-label">In Progress</div>
+            </div>
+          </div>
+          <div class="stat-card card-purple" style="border-top: 4px solid #805AD5;">
+            <div class="stat-icon">🧪</div>
+            <div class="stat-info" style="color: #44337A;">
+              <div class="stat-number" id="dashTotalSamples">0</div>
+              <div class="stat-label">Samples</div>
+            </div>
+          </div>
+          <div class="stat-card card-teal" style="border-top: 4px solid #319795; background-color: #E6FFFA;">
+            <div class="stat-icon">✔️</div>
+            <div class="stat-info" style="color: #234E52;">
+              <div class="stat-number" id="dashParamsDone">0</div>
+              <div class="stat-label">Params Done</div>
+            </div>
+          </div>
+          <div class="stat-card card-red">
+            <div class="stat-icon">🔬</div>
+            <div class="stat-info">
+              <div class="stat-number" id="dashInstrumentReady">0</div>
+              <div class="stat-label">Instr. Ready</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3 Charts (Middle Row) -->
+        <div class="dashboard-grid">
+          <div class="card">
+            <div class="card-header">
+              <h3>📊 Job Status by Analyst</h3>
+            </div>
+            <div style="position: relative; height: 220px; padding: 1rem;">
+              <canvas id="chartAnalystJobs"></canvas>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header">
+              <h3>📈 Parameter Completion</h3>
+            </div>
+            <div style="position: relative; height: 220px; padding: 1rem;">
+              <canvas id="chartParamTrend"></canvas>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header">
+              <h3>🔬 Instrument Usage</h3>
+            </div>
+            <div style="position: relative; height: 220px; padding: 1rem; display: flex; justify-content: center;">
+              <canvas id="chartInstrumentUsage"></canvas>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3 Summary Tables (Bottom Row) -->
+        <div class="dashboard-grid">
+          <!-- Table 1: Upcoming Jobs -->
+          <div class="card" style="padding: 0;">
+            <div class="card-header">
+              <h3>📋 Upcoming Jobs</h3>
+              <button class="btn-link" data-page="jobdesk">Semua →</button>
+            </div>
+            <div class="table-wrapper" style="max-height: 250px;">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Analis</th>
+                    <th>Tugas</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody id="dashUpcomingJobs">
+                  <tr><td colspan="3" class="empty-row">Memuat...</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          
+          <!-- Table 2: Unprocessed Samples (Antrian) -->
+          <div class="card" style="padding: 0;">
+            <div class="card-header">
+              <h3>⏳ Sampel Antrian</h3>
+              <button class="btn-link" data-page="sampel">Semua →</button>
+            </div>
+            <div class="table-wrapper" style="max-height: 250px;">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>No. Sampel</th>
+                    <th>Requester</th>
+                    <th>Masuk</th>
+                  </tr>
+                </thead>
+                <tbody id="dashUnprocessedSamples">
+                  <tr><td colspan="3" class="empty-row">Memuat...</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Table 3: Recently Completed -->
+          <div class="card" style="padding: 0;">
+            <div class="card-header">
+              <h3>✅ Baru Diselesaikan</h3>
+            </div>
+            <div class="table-wrapper" style="max-height: 250px;">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>No. Sampel</th>
+                    <th>Analis</th>
+                    <th>Selesai</th>
+                  </tr>
+                </thead>
+                <tbody id="dashRecentlyCompleted">
+                  <tr><td colspan="3" class="empty-row">Memuat...</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ====================================================
+         PAGE: INSTRUMEN
+         ==================================================== -->
+      <div class="page" id="page-instrumen">
+        <div class="section-header">
+          <div style="display:flex; align-items:center; gap:0.75rem;">
+            <h2>🔬 Instrumen</h2>
+            <button class="btn-secondary" style="padding:4px 10px; font-size:0.75rem;" onclick="toggleFilters('page-instrumen')">🔍 Filter</button>
+          </div>
+          <button class="btn-primary" id="btnTambahInstrumen">+ Catat Pemakaian</button>
+        </div>
+
+        <div class="stats-grid" style="margin-bottom:1rem">
+          <div class="stat-card">
+            <div class="stat-icon" style="background:var(--blue-pale); color:var(--blue)">🔬</div>
+            <div class="stat-content">
+              <div class="stat-value" id="statInstrTotal">0</div>
+              <div class="stat-label">Total Alat</div>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon" style="background:var(--green-pale); color:var(--green)">⚡</div>
+            <div class="stat-content">
+              <div class="stat-value" id="statInstrAktif">0</div>
+              <div class="stat-label">Digunakan</div>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon" style="background:var(--red-pale); color:var(--red)">🔧</div>
+            <div class="stat-content">
+              <div class="stat-value" id="statInstrMaintenance">0</div>
+              <div class="stat-label">Maintenance</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Form -->
+        <div class="form-card" id="formInstrumen" style="display:none;">
+          <div class="form-card-header">
+            <h3>📋 Form Pemakaian Instrumen Baru</h3>
+            <button class="btn-close" id="closeFormInstrumen">✕</button>
+          </div>
+          <form id="instrumenForm">
+            <div class="form-grid">
+              <div class="form-group">
+                <label>Instrumen <span class="req">*</span></label>
+                <select id="instrNama" required>
+                  <option value="">-- Pilih Instrumen --</option>
+                </select>
+              </div>
+              <div class="form-group" id="unitGroup" style="display:none;">
+                <label>Unit / LAMRD <span class="req">*</span></label>
+                <select id="instrUnit"></select>
+              </div>
+              <div class="form-group">
+                <label>No. Sampel (Terkait)</label>
+                <input type="text" id="instrNoSampel" placeholder="Cth: SMP/2603/0001" />
+              </div>
+              <div class="form-group">
+                <label>No. Seri / ID Instrumen</label>
+                <input type="text" id="instrNoSeri" placeholder="Auto-isi dari pilihan instrumen" />
+              </div>
+              <div class="form-group">
+                <label>Nama Analis <span class="req">*</span></label>
+                <input type="text" id="instrAnalis" required placeholder="Nama analis pemakai" />
+              </div>
+              <div class="form-group">
+                <label>Waktu Mulai <span class="req">*</span></label>
+                <input type="datetime-local" id="instrWaktuMulai" required />
+              </div>
+              <div class="form-group">
+                <label>Waktu Selesai</label>
+                <input type="datetime-local" id="instrWaktuSelesai" />
+              </div>
+              <div class="form-group" id="instrSuhuGroup" style="display:none;">
+                <label>Suhu Operasional (°C) <span class="req">*</span></label>
+                <input type="number" id="instrSuhu" step="0.1" placeholder="Contoh: 37.5" />
+              </div>
+              <div class="form-group full-width">
+                <label>Tujuan / Nama Sampel <span class="req">*</span></label>
+                <input type="text" id="instrTujuan" required
+                  placeholder="Tujuan penggunaan atau nama sampel yang dianalisis" />
+              </div>
+              <div class="form-group">
+                <label>Kondisi Awal Instrumen</label>
+                <select id="instrKondisiAwal">
+                  <option>Baik</option>
+                  <option>Ada Gangguan Minor</option>
+                  <option>Rusak / Perlu Perbaikan</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Kondisi Akhir Instrumen <span class="req">*</span></label>
+                <select id="instrKondisiAkhir" required>
+                  <option>Baik</option>
+                  <option>Ada Gangguan Minor</option>
+                  <option>Rusak / Perlu Perbaikan</option>
+                </select>
+              </div>
+              <div class="form-group full-width">
+                <label>Catatan</label>
+                <textarea id="instrCatatan" rows="2" placeholder="Catatan tambahan…"></textarea>
+              </div>
+              <div class="form-actions full-width">
+                <button type="button" class="btn-secondary" id="cancelInstrumen">Batal</button>
+                <button type="submit" class="btn-primary">💾 Simpan</button>
+              </div>
+            </div>
+          </form>
+        </div>
+
+        <!-- Instrument Catalog (click to use) -->
+        <div class="catalog-hint">👆 Klik kartu instrumen untuk membuka form pemakaian</div>
+        <div class="instrument-catalog-grid" id="instrumentCatalogGrid" style="margin-bottom:1rem;"></div>
+
+        <!-- Divider + Riwayat -->
+        <div style="border-top:2px solid var(--border);margin:.75rem 0;padding-top:.75rem;">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.75rem;">
+            <h3 style="font-size:1rem;font-weight:700;color:var(--text);">📋 Riwayat Pemakaian Instrumen</h3>
+            <div class="filter-bar" id="filterBarInstrumen" style="margin:0;background:transparent;border:none;padding:0;box-shadow:none;">
+              <input class="filter-input" id="filterInstrumen" placeholder="🔍 Cari instrumen, analis…" style="min-width:180px;"/>
+              <select class="filter-select" id="filterKondisiInstrumen">
+                <option value="">Semua Kondisi</option>
+                <option>Baik</option>
+                <option>Ada Gangguan Minor</option>
+                <option>Rusak / Perlu Perbaikan</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="table-wrapper">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Instrumen</th>
+                  <th>No. Seri</th>
+                  <th>Analis</th>
+                  <th>Mulai</th>
+                  <th>Selesai</th>
+                  <th>Tujuan</th>
+                  <th>Kondisi</th>
+                  <th class="lt-only-th">Aksi</th>
+                </tr>
+              </thead>
+              <tbody id="instrumenBody">
+                <tr>
+                  <td colspan="9" class="empty-row">Belum ada catatan</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Catalog page removed — merged into instrumen page -->
+
+      <!-- ====================================================
+         PAGE: SUHU
+         ==================================================== -->
+      <div class="page" id="page-suhu">
+        <div class="section-header">
+          <div style="display:flex; align-items:center; gap:0.75rem;">
+            <h2>🌡️ Suhu Lingkungan</h2>
+            <button class="btn-secondary" style="padding:4px 10px; font-size:0.75rem;" onclick="toggleFilters('page-suhu')">🔍 Filter</button>
+          </div>
+          <button class="btn-primary" id="btnTambahSuhu">+ Catat Suhu</button>
+        </div>
+
+        <div class="stats-grid" style="margin-bottom:1rem">
+          <div class="stat-card">
+            <div class="stat-icon" style="background:var(--blue-pale); color:var(--blue)">🏢</div>
+            <div class="stat-content">
+              <div class="stat-value" id="statSuhuRuangan">0</div>
+              <div class="stat-label">Ruangan</div>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon" style="background:var(--red-pale); color:var(--red)">⚠️</div>
+            <div class="stat-content">
+              <div class="stat-value" id="statSuhuOOS">0</div>
+              <div class="stat-label">OOS Hari Ini</div>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon" style="background:var(--green-pale); color:var(--green)">📊</div>
+            <div class="stat-content">
+              <div class="stat-value" id="statSuhuUpdate">0</div>
+              <div class="stat-label">Lengkap (%)</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="session-alert" id="sessionAlert"></div>
+
+        <!-- Form -->
+        <div class="form-card" id="formSuhu" style="display:none;">
+          <div class="form-card-header">
+            <h3>📋 Form Pencatatan Suhu</h3>
+            <button class="btn-close" id="closeFormSuhu">✕</button>
+          </div>
+          <form id="suhuForm">
+            <div class="form-grid">
+              <div class="form-group">
+                <label>Tanggal <span class="req">*</span></label>
+                <input type="date" id="suhuTanggal" required />
+              </div>
+              <div class="form-group">
+                <label>Sesi <span class="req">*</span></label>
+                <select id="suhuSesi" required>
+                  <option value="">-- Pilih Sesi --</option>
+                  <option value="pagi">🌅 Pagi (07:00 – 09:00)</option>
+                  <option value="sore">🌇 Sore (15:00 – 17:00)</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Ruangan <span class="req">*</span></label>
+                <select id="suhuRuangan" required>
+                  <option value="">-- Pilih Ruangan --</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Nama Petugas <span class="req">*</span></label>
+                <input type="text" id="suhuPetugas" required />
+              </div>
+              <div class="form-group full-width">
+                <div id="suhuSpecBox"></div>
+              </div>
+              <div class="form-group">
+                <label>Suhu (°C) <span class="req">*</span></label>
+                <input type="number" id="suhuNilai" step="0.1" required placeholder="Contoh: 22.5" />
+              </div>
+              <div class="form-group" id="humidityGroup">
+                <label>Kelembaban (%RH)</label>
+                <input type="number" id="suhuKelembaban" step="0.1" min="0" max="100" placeholder="Contoh: 55" />
+              </div>
+              <div class="form-group">
+                <label>Kondisi AC</label>
+                <select id="suhuKondisiAC">
+                  <option>Normal / Menyala</option>
+                  <option>Mati / Gangguan</option>
+                  <option>Tidak Ada AC</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Tindakan (jika OOS)</label>
+                <input type="text" id="suhuTindakan" placeholder="Tindakan korektif jika di luar spesifikasi…" />
+              </div>
+              <div class="form-group full-width">
+                <label>Catatan</label>
+                <textarea id="suhuCatatan" rows="2" placeholder="Catatan tambahan…"></textarea>
+              </div>
+              <div class="form-actions full-width">
+                <button type="button" class="btn-secondary" id="cancelSuhu">Batal</button>
+                <button type="submit" class="btn-primary">💾 Simpan</button>
+              </div>
+            </div>
+          </form>
+        </div>
+
+        <!-- Board — 10 rooms, one card each -->
+        <div class="temp-board-grid large" id="tempBoardMain" style="margin-bottom:1rem;"></div>
+
+        <!-- Table (Filtered) -->
+        <div class="filter-bar hidden" id="filterBarSuhu">
+          <input class="filter-input" id="filterSuhu" placeholder="🔍 Cari ruangan, petugas…" />
+          <select class="filter-select" id="filterSesiSuhu">
+            <option value="">Semua Sesi</option>
+            <option value="pagi">Pagi</option>
+            <option value="sore">Sore</option>
+          </select>
+          <select class="filter-select" id="filterStatusSuhu">
+            <option value="">Semua Status</option>
+            <option value="normal">Normal</option>
+            <option value="oos">Out of Spec</option>
+          </select>
+        </div>
+        <div class="card">
+          <div class="table-wrapper">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Tanggal</th>
+                  <th>Sesi</th>
+                  <th>Ruangan</th>
+                  <th>Suhu</th>
+                  <th>Spec Suhu</th>
+                  <th>Hum (%)</th>
+                  <th>Spec Hum</th>
+                  <th>Status</th>
+                  <th>Petugas</th>
+                  <th class="lt-only-th">Aksi</th>
+                </tr>
+              </thead>
+              <tbody id="suhuBody">
+                <tr>
+                  <td colspan="11" class="empty-row">Belum ada data</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ====================================================
+         PAGE: JOBDESK
+         ==================================================== -->
+      <div class="page" id="page-jobdesk">
+        <div class="section-header">
+          <div style="display:flex; align-items:center; gap:0.75rem;">
+            <h2>📋 Jobdesk</h2>
+            <button class="btn-secondary" style="padding:4px 10px; font-size:0.75rem;" onclick="toggleFilters('page-jobdesk')">🔍 Filter</button>
+          </div>
+          <!-- Only LT can create assignment -->
+          <button class="btn-primary lt-only-btn" id="btnTambahJobdesk">+ Buat Penugasan</button>
+        </div>
+
+        <div class="stats-grid" style="margin-bottom:1rem">
+          <div class="stat-card">
+            <div class="stat-icon" style="background:var(--blue-pale); color:var(--blue)">⏳</div>
+            <div class="stat-content">
+              <div class="stat-value" id="statJobWait">0</div>
+              <div class="stat-label">Belum Mulai</div>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon" style="background:var(--orange-pale); color:var(--orange)">🔄</div>
+            <div class="stat-content">
+              <div class="stat-value" id="statJobProses">0</div>
+              <div class="stat-label">Diproses</div>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon" style="background:var(--green-pale); color:var(--green)">✅</div>
+            <div class="stat-content">
+              <div class="stat-value" id="statJobDone">0</div>
+              <div class="stat-label">Selesai</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Form (LT Only) -->
+        <div class="form-card" id="formJobdesk" style="display:none;">
+          <div class="form-card-header">
+            <h3>📋 Form Penugasan Analis Baru</h3>
+            <button class="btn-close" id="closeFormJobdesk">✕</button>
+          </div>
+          <form id="jobdeskForm">
+            <div class="form-grid">
+              <div class="form-group">
+                <label>Tanggal <span class="req">*</span></label>
+                <input type="date" id="jdkTanggal" required />
+              </div>
+              <div class="form-group">
+                <label>Analis <span class="req">*</span></label>
+                <select id="jdkAnalis" required>
+                  <option value="">-- Pilih Analis --</option>
+                  <option>Daffa Ardiyansyah</option>
+                  <option>Bagus Suciantoro</option>
+                  <option>Arip Y</option>
+                  <option>Fauziah Rahman</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Nomor Sampel <span class="req">*</span></label>
+                <input type="text" id="jdkNoSampel" required placeholder="Cth: SMP/2603/0001" />
+              </div>
+              <div class="form-group full-width">
+                <label>Parameter Pengujian <span class="req">*</span></label>
+                <div class="checkbox-grid" id="jdkParamGrid"></div>
+              </div>
+              <div class="form-group full-width">
+                <label>Parameter Lain (Tuliskan)</label>
+                <input type="text" id="jdkParamLain" placeholder="Parameter tambahan…" />
+              </div>
+              <div class="form-group">
+                <label>Prioritas</label>
+                <select id="jdkPrioritas">
+                  <option value="normal">Normal</option>
+                  <option value="tinggi">Urgent</option>
+                  <option value="urgent">Very Urgent</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Deadline</label>
+                <input type="date" id="jdkDeadline" />
+              </div>
+              <div class="form-group">
+                <label>Status Awal</label>
+                <select id="jdkStatus">
+                  <option value="belum">⏳ Belum Mulai</option>
+                  <option value="proses">⚙️ Sedang Proses</option>
+                  <option value="selesai">✅ Selesai</option>
+                </select>
+              </div>
+              <div class="form-group full-width">
+                <label>Catatan</label>
+                <textarea id="jdkCatatan" rows="2" placeholder="Catatan atau instruksi tambahan…"></textarea>
+              </div>
+              <div class="form-actions full-width">
+                <button type="button" class="btn-secondary" id="cancelJobdesk">Batal</button>
+                <button type="submit" class="btn-primary">💾 Simpan Tugas</button>
+              </div>
+            </div>
+          </form>
+        </div>
+
+        <!-- Kanban Board -->
+        <div class="kanban-board">
+          <div class="kanban-col">
+            <div class="kanban-col-header header-belum">⏳ Belum Mulai <span class="kanban-count"
+                id="countBelum">0</span></div>
+            <div class="kanban-body" id="kanbanBelum"></div>
+          </div>
+          <div class="kanban-col">
+            <div class="kanban-col-header header-proses">⚙️ Sedang Proses <span class="kanban-count"
+                id="countProses">0</span></div>
+            <div class="kanban-body" id="kanbanProses"></div>
+          </div>
+          <div class="kanban-col">
+            <div class="kanban-col-header header-selesai">✅ Selesai <span class="kanban-count"
+                id="countSelesai">0</span></div>
+            <div class="kanban-body" id="kanbanSelesai"></div>
+          </div>
+        </div>
+
+        <!-- Filter & Table -->
+        <div class="filter-bar hidden" id="filterBarJobdesk">
+          <input class="filter-input" id="filterJobdesk" placeholder="🔍 Cari analis, tugas…" />
+          <select class="filter-select" id="filterStatusJobdesk">
+            <option value="">Semua Status</option>
+            <option value="belum">Belum</option>
+            <option value="proses">Proses</option>
+            <option value="selesai">Selesai</option>
+          </select>
+          <select class="filter-select" id="filterPrioritasJobdesk">
+            <option value="">Semua Prioritas</option>
+            <option value="normal">Normal</option>
+            <option value="tinggi">Tinggi</option>
+            <option value="urgent">Urgent</option>
+          </select>
+        </div>
+        <div class="card">
+          <div class="table-wrapper">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Analis</th>
+                  <th>Tanggal</th>
+                  <th>No. Sampel</th>
+                  <th>Parameter</th>
+                  <th>Prioritas</th>
+                  <th>Status</th>
+                  <th class="lt-only-th">Aksi</th>
+                </tr>
+              </thead>
+              <tbody id="jobdeskBody">
+                <tr>
+                  <td colspan="8" class="empty-row">Belum ada penugasan</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ====================================================
+         PAGE: SAMPEL
+         ==================================================== -->
+      <div class="page" id="page-sampel">
+        <div class="section-header">
+          <div style="display:flex; align-items:center; gap:0.75rem;">
+            <h2>🧪 Penerimaan Sampel</h2>
+          </div>
+          <div style="display:flex;gap:.5rem;align-items:center;">
+            <!-- LT-Only: reset counter -->
+            <button class="btn-secondary lt-only-btn" id="btnResetCounter" style="display:none;padding:.4rem .75rem;font-size:.75rem;">🔢 Atur No.</button>
+            <!-- Only LT can register samples -->
+            <button class="btn-primary lt-only-btn" id="btnTambahSampel" style="display:none;">+ Daftarkan Sampel</button>
+          </div>
+        </div>
+
+        <div class="stats-grid" style="margin-bottom:1rem">
+          <div class="stat-card">
+            <div class="stat-icon" style="background:var(--blue-pale); color:var(--blue)">🧪</div>
+            <div class="stat-content">
+              <div class="stat-value" id="statSmpMasuk">0</div>
+              <div class="stat-label">Masuk Hari Ini</div>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon" style="background:var(--red-pale); color:var(--red)">⌛</div>
+            <div class="stat-content">
+              <div class="stat-value" id="statSmpAntrian">0</div>
+              <div class="stat-label">Dalam Antrian</div>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon" style="background:var(--green-pale); color:var(--green)">✨</div>
+            <div class="stat-content">
+              <div class="stat-value" id="statSmpSelesai">0</div>
+              <div class="stat-label">Selesai</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Form -->
+        <div class="form-card" id="formSampel" style="display:none;">
+          <div class="form-card-header">
+            <h3>📋 Form Penerimaan Sampel Masuk</h3>
+            <button class="btn-close" id="closeFormSampel">✕</button>
+          </div>
+          <form id="sampelForm">
+            <div class="form-grid">
+              <div class="form-section-title full-width">A. Identitas Sampel</div>
+              <div class="form-group">
+                <label>Nomor Sampel</label>
+                <input type="text" id="smpNoSampel" readonly
+                  style="background:var(--red-pale);font-weight:700;color:var(--red)" />
+              </div>
+              <div class="form-group">
+                <label>Tanggal & Waktu Sampel Masuk <span class="req">*</span></label>
+                <input type="datetime-local" id="smpTanggal" required />
+              </div>
+              <div class="form-group">
+                <label>Jenis Sampel <span class="req">*</span></label>
+                <select id="smpJenis" required>
+                  <option value="">-- Pilih Jenis Sampel --</option>
+                  <option>Minyak Kelapa Sawit (CPO)</option>
+                  <option>Palm Kernel Oil (PKO)</option>
+                  <option>RBD Olein</option>
+                  <option>RBD Stearin</option>
+                  <option>RBDPO</option>
+                  <option>Fatty Acid</option>
+                  <option>Biodiesel / FAME</option>
+                  <option>Shortening</option>
+                  <option>Margarine</option>
+                  <option>Lainnya</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Jumlah Kemasan <span class="req">*</span></label>
+                <input type="number" id="smpJumlah" min="1" required />
+              </div>
+              <div class="form-group">
+                <label>Volume / Berat per Kemasan</label>
+                <input type="text" id="smpVolume" placeholder="Contoh: 500 mL, 250 g" />
+              </div>
+              <div class="form-group">
+                <label>Suhu Sampel Saat Masuk (°C)</label>
+                <input type="number" id="smpSuhuMasuk" step="0.1" placeholder="Contoh: 25.0" />
+              </div>
+
+              <div class="form-section-title full-width">B. Informasi Requester</div>
+              <div class="form-group">
+                <label>Nama Requester / Perusahaan <span class="req">*</span></label>
+                <input type="text" id="smpRequester" required />
+              </div>
+              <div class="form-group">
+                <label>No. Telepon</label>
+                <input type="tel" id="smpTelp" placeholder="08xx-xxxx-xxxx" />
+              </div>
+              <div class="form-group">
+                <label>Email</label>
+                <input type="email" id="smpEmail" />
+              </div>
+              <div class="form-group full-width">
+                <label>Alamat</label>
+                <textarea id="smpAlamat" rows="2"></textarea>
+              </div>
+
+              <div class="form-section-title full-width">C. Parameter Pengujian</div>
+              <div class="form-group full-width">
+                <label>Parameter yang Diminta <span class="req">*</span></label>
+                <div class="checkbox-grid" id="paramGrid"></div>
+              </div>
+              <div class="form-group full-width">
+                <label>Parameter Lain (Tuliskan)</label>
+                <input type="text" id="smpParamLain" placeholder="Parameter tambahan…" />
+              </div>
+
+              <div class="form-section-title full-width">D. Kondisi &amp; Penerimaan</div>
+              <div class="form-group">
+                <label>Kondisi Wadah</label>
+                <select id="smpKondisiWadah">
+                  <option>Baik / Rapat</option>
+                  <option>Ada Kebocoran Minor</option>
+                  <option>Rusak / Tumpah</option>
+                  <option>Tidak Sesuai SOP</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Kondisi Sampel</label>
+                <select id="smpKondisiSampel">
+                  <option>Baik / Normal</option>
+                  <option>Berubah Warna</option>
+                  <option>Ada Endapan</option>
+                  <option>Tidak Normal</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Preservasi / Penyimpanan</label>
+                <select id="smpPreservasi">
+                  <option>Suhu Ruang</option>
+                  <option>Refrigerator (0–8°C)</option>
+                  <option>Refrigerator Smp (9–11°C)</option>
+                  <option>Retain Sample Room</option>
+                  <option>Freezer (-25 s/d -5°C)</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Petugas Penerima <span class="req">*</span></label>
+                <input type="text" id="smpPenerima" required />
+              </div>
+              <div class="form-group">
+                <label>Target Selesai</label>
+                <input type="date" id="smpTarget" />
+              </div>
+              <div class="form-group">
+                <label>Status</label>
+                <select id="smpStatus">
+                  <option value="diterima">✅ Diterima</option>
+                  <option value="antrian">⏳ Antrian</option>
+                  <option value="proses_s">⚙️ Proses</option>
+                  <option value="ditolak">❌ Ditolak</option>
+                </select>
+              </div>
+              <div class="form-group full-width">
+                <label>Catatan</label>
+                <textarea id="smpCatatan" rows="2" placeholder="Catatan tambahan…"></textarea>
+              </div>
+              <div class="form-actions full-width">
+                <button type="button" class="btn-secondary" id="cancelSampel">Batal</button>
+                <button type="submit" class="btn-primary">💾 Simpan &amp; Cetak Slip</button>
+              </div>
+            </div>
+          </form>
+        </div>
+
+        <!-- Filter & Table -->
+        <div class="filter-bar">
+          <input class="filter-input" id="filterSampel" placeholder="🔍 Cari no. sampel, requester…" />
+          <select class="filter-select" id="filterStatusSampel">
+            <option value="">Semua Status</option>
+            <option value="diterima">Diterima</option>
+            <option value="antrian">Antrian</option>
+            <option value="proses_s">Proses</option>
+            <option value="ditolak">Ditolak</option>
+          </select>
+        </div>
+        <div class="card">
+          <div class="table-wrapper">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>No. Sampel</th>
+                  <th>Tgl Masuk</th>
+                  <th>Jenis</th>
+                  <th>Requester</th>
+                  <th>Suhu Masuk</th>
+                  <th>Parameter</th>
+                  <th>Penerima</th>
+                  <th>Status</th>
+                  <th class="lt-only-th">Aksi</th>
+                </tr>
+              </thead>
+              <tbody id="sampelBody">
+                <tr>
+                  <td colspan="10" class="empty-row">Belum ada sampel</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ====================================================
+         PAGE: RIWAYAT
+         ==================================================== -->
+      <div class="page" id="page-riwayat">
+        <div class="section-header">
+          <h2>📜 Riwayat</h2>
+        </div>
+        <div class="filter-bar">
+          <select class="filter-select" id="filterModulRiwayat">
+            <option value="all">Semua Modul</option>
+            <option value="instrumen">🔬 Instrumen</option>
+            <option value="suhu">🌡️ Suhu</option>
+            <option value="jobdesk">📋 Jobdesk</option>
+            <option value="sampel">🧪 Sampel</option>
+          </select>
+        </div>
+        <div class="card">
+          <div class="activity-log" id="activityLog"></div>
+        </div>
+      </div>
+
+    </div><!-- /main-content -->
+  </div><!-- /app-root -->
+
+  <!-- Modal konfirmasi reset counter -->
+  <div id="modalResetCounter" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:9998;display:none;align-items:center;justify-content:center;">
+    <div style="background:#fff;border-radius:12px;padding:2rem;max-width:400px;width:90%;box-shadow:0 20px 60px rgba(0,0,0,.2);">
+      <h3 style="margin-bottom:.75rem;color:#D0021B;">🔢 Atur Nomor Sampel</h3>
+      <p style="font-size:.85rem;color:#4A5568;margin-bottom:1rem;">Counter saat ini: <strong id="currentCounterDisplay">—</strong></p>
+      <div style="display:flex;flex-direction:column;gap:.5rem;margin-bottom:1.25rem;">
+        <label style="font-size:.78rem;font-weight:600;color:#4A5568;">Set counter ke:</label>
+        <input type="number" id="newCounterVal" min="0" style="border:1.5px solid #E2E8F0;border-radius:6px;padding:.58rem .85rem;font-size:.9rem;font-family:inherit;" />
+      </div>
+      <div style="display:flex;gap:.75rem;justify-content:flex-end;">
+        <button onclick="closeResetCounterModal()" style="background:#F4F6F8;border:1.5px solid #E2E8F0;border-radius:6px;padding:.55rem 1.1rem;cursor:pointer;font-family:inherit;font-weight:500;">Batal</button>
+        <button onclick="confirmResetCounter()" style="background:linear-gradient(135deg,#A30115,#D0021B);color:#fff;border:none;border-radius:6px;padding:.55rem 1.1rem;cursor:pointer;font-family:inherit;font-weight:700;">✅ Terapkan</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="app.js"></script>
+</body>
+
+</html>

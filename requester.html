@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <title>LabDigital Laboratorium R&D | Portal Penerimaan Sampel</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --red: #D0021B;
+      --red-d: #A30115;
+      --red-pale: #FFF0F2;
+      --red-mid: #FDDDE1;
+      --bg: #F4F6F8;
+      --card: #fff;
+      --border: #E2E8F0;
+      --text: #1A202C;
+      --muted: #4A5568;
+      --dim: #A0AEC0;
+      --green: #0D9E6E;
+      --r: 10px;
+      --r-sm: 6px;
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      font-size: 14px;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    ::-webkit-scrollbar {
+      width: 5px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--border);
+      border-radius: 3px;
+    }
+
+    .header {
+      background: linear-gradient(135deg, var(--red-d), var(--red));
+      padding: 1rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 2px 10px rgba(208, 2, 27, .3);
+    }
+
+    .logo {
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: .6rem;
+    }
+
+    .back-link {
+      color: rgba(255, 255, 255, .8);
+      text-decoration: none;
+      font-size: .82rem;
+      transition: color .2s;
+    }
+
+    .back-link:hover {
+      color: #fff;
+    }
+
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem;
+    }
+
+    h1 {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: .2rem;
+    }
+
+    .subtitle {
+      color: var(--muted);
+      font-size: .88rem;
+      margin-bottom: 1.75rem;
+    }
+
+    .step-bar {
+      display: flex;
+      gap: .5rem;
+      margin-bottom: 2rem;
+    }
+
+    .step {
+      flex: 1;
+      height: 4px;
+      border-radius: 2px;
+      background: var(--border);
+      transition: background .3s;
+    }
+
+    .step.done {
+      background: var(--green);
+    }
+
+    .step.active {
+      background: var(--red);
+    }
+
+    .form-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      overflow: hidden;
+      margin-bottom: 1.25rem;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, .06);
+    }
+
+    .fc-hdr {
+      padding: .85rem 1.4rem;
+      background: linear-gradient(135deg, var(--red-pale), #fff);
+      border-bottom: 1px solid var(--border);
+      font-weight: 700;
+      font-size: .9rem;
+      color: var(--red-d);
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      padding: 1.4rem;
+    }
+
+    .fg {
+      display: flex;
+      flex-direction: column;
+      gap: .35rem;
+    }
+
+    .fg.w2 {
+      grid-column: 1/-1;
+    }
+
+    .fg label {
+      font-size: .76rem;
+      font-weight: 600;
+      color: var(--muted);
+    }
+
+    .fg input,
+    .fg select,
+    .fg textarea {
+      background: var(--bg);
+      border: 1.5px solid var(--border);
+      border-radius: var(--r-sm);
+      padding: .58rem .85rem;
+      color: var(--text);
+      font-size: .85rem;
+      font-family: inherit;
+      transition: all .2s;
+      width: 100%;
+    }
+
+    .fg input:focus,
+    .fg select:focus,
+    .fg textarea:focus {
+      outline: none;
+      border-color: var(--red);
+      box-shadow: 0 0 0 3px rgba(208, 2, 27, .1);
+      background: #fff;
+    }
+
+    .fg input::placeholder,
+    .fg textarea::placeholder {
+      color: var(--dim);
+    }
+
+    .fg textarea {
+      resize: vertical;
+    }
+
+    .req {
+      color: var(--red);
+    }
+
+    .checkbox-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: .4rem;
+      padding: .75rem;
+      background: var(--bg);
+      border: 1.5px solid var(--border);
+      border-radius: var(--r-sm);
+      max-height: 280px;
+      overflow-y: auto;
+    }
+
+    .ci {
+      display: flex;
+      align-items: center;
+      gap: .4rem;
+      font-size: .79rem;
+      cursor: pointer;
+      padding: .3rem .5rem;
+      border-radius: 4px;
+      transition: background .2s;
+    }
+
+    .ci:hover {
+      background: var(--red-mid);
+    }
+
+    .ci input {
+      width: auto;
+      cursor: pointer;
+      accent-color: var(--red);
+    }
+
+    .btn-submit {
+      width: 100%;
+      background: linear-gradient(135deg, var(--red-d), var(--red));
+      color: #fff;
+      border: none;
+      border-radius: var(--r-sm);
+      padding: .85rem;
+      font-weight: 700;
+      font-size: .95rem;
+      cursor: pointer;
+      transition: all .25s;
+      font-family: inherit;
+      margin-top: .5rem;
+    }
+
+    .btn-submit:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 18px rgba(208, 2, 27, .35);
+    }
+
+    .success-panel {
+      display: none;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-top: 4px solid var(--green);
+      border-radius: var(--r);
+      padding: 2.5rem;
+      text-align: center;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, .08);
+    }
+
+    .success-panel.show {
+      display: block;
+    }
+
+    .success-icon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
+
+    .success-panel h2 {
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: var(--green);
+      margin-bottom: .5rem;
+    }
+
+    .success-panel p {
+      color: var(--muted);
+      font-size: .88rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .no-sampel-display {
+      font-size: 1.7rem;
+      font-weight: 800;
+      color: var(--red);
+      background: var(--red-pale);
+      border: 2px solid var(--red-mid);
+      padding: .9rem 2rem;
+      border-radius: var(--r-sm);
+      display: inline-block;
+      letter-spacing: .5px;
+      margin-bottom: 1rem;
+    }
+
+    .btn-new {
+      background: var(--bg);
+      border: 1.5px solid var(--border);
+      color: var(--text);
+      border-radius: var(--r-sm);
+      padding: .65rem 1.5rem;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: .85rem;
+      font-family: inherit;
+      transition: all .2s;
+    }
+
+    .btn-new:hover {
+      background: var(--card);
+      border-color: var(--red-mid);
+    }
+
+    .toast {
+      position: fixed;
+      bottom: 1.75rem;
+      right: 1.75rem;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: .8rem 1.2rem;
+      font-size: .83rem;
+      font-weight: 500;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, .12);
+      z-index: 9999;
+      opacity: 0;
+      transform: translateY(8px);
+      pointer-events: none;
+      transition: all .25s;
+      display: flex;
+      align-items: center;
+      gap: .55rem;
+      max-width: 340px;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .toast.success {
+      border-left: 4px solid var(--green);
+    }
+
+    .toast.error {
+      border-left: 4px solid var(--red);
+    }
+
+    @media(max-width:640px) {
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .fg.w2 {
+        grid-column: 1;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="header">
+    <div class="logo">⚗️ LabDigital <span style="opacity:.6;font-weight:400;font-size:.75rem;">| laboratorium R&D</span>
+    </div>
+    <a href="index.html" class="back-link">← Login</a>
+  </div>
+
+  <div class="container" id="mainForm">
+    <h1>📦 Portal Penerimaan Sampel</h1>
+    <p class="subtitle">Isi formulir untuk mendaftarkan sampel ke Laboratorium R&D.</p>
+
+    <div class="step-bar">
+      <div class="step active" id="step1"></div>
+      <div class="step" id="step2"></div>
+      <div class="step" id="step3"></div>
+    </div>
+
+    <form id="reqForm">
+      <!-- 1. Identitas Sampel -->
+      <div class="form-card">
+        <div class="fc-hdr">📌 1. Identitas Sampel</div>
+        <div class="form-grid">
+          <div class="fg"><label>Jenis Sampel <span class="req">*</span></label>
+            <select id="rJenis" required>
+              <option value="">-- Pilih Jenis --</option>
+              <option>Minyak Kelapa Sawit (CPO)</option>
+              <option>Palm Kernel Oil (PKO)</option>
+              <option>RBD Olein</option>
+              <option>RBD Stearin</option>
+              <option>RBDPO</option>
+              <option>Fatty Acid</option>
+              <option>Biodiesel / FAME</option>
+              <option>Shortening</option>
+              <option>Margarine</option>
+              <option>Lainnya</option>
+            </select>
+          </div>
+          <div class="fg"><label>Tanggal &amp; Waktu Sampel Masuk <span class="req">*</span></label>
+            <input type="datetime-local" id="rTglMasuk" required /></div>
+          <div class="fg"><label>Jumlah Kemasan <span class="req">*</span></label><input type="number" id="rJumlah"
+              min="1" required /></div>
+          <div class="fg"><label>Volume / Berat per Kemasan</label><input type="text" id="rVolume"
+              placeholder="500 mL, 250 g, dll." /></div>
+          <div class="fg"><label>Suhu Sampel Saat Masuk (°C)</label><input type="number" id="rSuhuMasuk"
+              step="0.1" placeholder="Contoh: 25.0" /></div>
+        </div>
+      </div>
+
+      <!-- 2. Requester -->
+      <div class="form-card">
+        <div class="fc-hdr">👤 2. Informasi Requester</div>
+        <div class="form-grid">
+          <div class="fg"><label>Nama Lengkap / Instansi <span class="req">*</span></label><input type="text" id="rNama"
+              required /></div>
+          <div class="fg"><label>No. Telepon / HP <span class="req">*</span></label><input type="tel" id="rTelp"
+              required /></div>
+          <div class="fg"><label>Email</label><input type="email" id="rEmail" /></div>
+          <div class="fg"><label>Keperluan / Tujuan Pengujian</label><input type="text" id="rKeperluan" /></div>
+          <div class="fg w2"><label>Alamat</label><textarea id="rAlamat" rows="2"></textarea></div>
+        </div>
+      </div>
+
+      <!-- 3. Parameter -->
+      <div class="form-card">
+        <div class="fc-hdr">🔬 3. Parameter Pengujian</div>
+        <div class="form-grid">
+          <div class="fg w2">
+            <label>Centang parameter yang diminta <span class="req">*</span></label>
+            <div class="checkbox-grid" id="rParamGrid">
+              <!-- Filled by JS -->
+            </div>
+          </div>
+          <div class="fg w2"><label>Parameter Lain</label><input type="text" id="rParamLain"
+              placeholder="Parameter tambahan…" /></div>
+          <div class="fg w2"><label>Catatan / Permintaan Khusus</label><textarea id="rCatatan" rows="3"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <div style="padding:.5rem 0;">
+        <button type="submit" class="btn-submit">📤 Kirim Permohonan Sampel</button>
+      </div>
+    </form>
+
+    <div class="success-panel" id="successPanel">
+      <div class="success-icon">✅</div>
+      <h2>Permohonan Berhasil!</h2>
+      <p>Nomor sampel Anda:</p>
+      <div class="no-sampel-display" id="displayNoSampel">SMP/—/—</div>
+      <p style="font-size:.78rem;color:var(--dim);margin-bottom:1.5rem;">Simpan nomor ini. Petugas akan segera
+        menghubungi Anda.</p>
+      <button class="btn-new" onclick="resetForm()">📋 Daftarkan Sampel Baru</button>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+    const LAB_PARAMS = [
+      'Iodine Value', 'Free Fatty Acid (as palmitic)', 'Free Fatty Acid (as lauric)',
+      'Peroxide Value', 'Moisture & Volatile Matter (Hotplate)', 'Salt Content',
+      'Color (Lovibond 5¼")', 'Color (Lovibond 1")', 'Slip Melting Point, 2 hr',
+      'Solid Fat Content', 'Acid Value', 'Cloud Point Test at 10°C', 'Firmness',
+      'Oil Stability Index (OSI)', 'Fatty Acid Composition (FAC)',
+      'Saturated Fatty Acids (SAFA)', 'Mono-unsaturated Fatty Acids (MUFA)',
+      'Poly-unsaturated Fatty Acids (PUFA)', 'Trans fat', 'Fat Content',
+      'Carotene Content (as β-carotene)', 'Ash Content', 'Vitamin A',
+      'Vitamin E (as α-Tocopherol)', 'p-Anisidine Value', 'TBHQ', 'BHA', 'BHT',
+      'Triacylglycerol (TAG) Composition', '2-MCPD esters', '3-MCPD esters', 'Glycidyl esters',
+    ];
+
+    // Populate parameter checkboxes
+    const pg = document.getElementById('rParamGrid');
+    pg.innerHTML = LAB_PARAMS.map(p => `<label class="ci"><input type="checkbox" name="rp" value="${p}"> ${p}</label>`).join('');
+
+    let counter = parseInt(localStorage.getItem('ld_sampelCounter') || '0');
+    function genNo() {
+      counter++; localStorage.setItem('ld_sampelCounter', counter);
+      const n = new Date(), y = n.getFullYear().toString().slice(-2), m = String(n.getMonth() + 1).padStart(2, '0');
+      return `SMP/${y}${m}/${String(counter).padStart(4, '0')}`;
+    }
+    function showToast(msg, type = 'success') {
+      const t = document.getElementById('toast');
+      t.textContent = (type === 'success' ? '✅' : '❌') + ' ' + msg;
+      t.className = `toast ${type} show`;
+      setTimeout(() => t.className = 'toast', 3500);
+    }
+    function setStep(n) { [1, 2, 3].forEach(i => { const el = document.getElementById(`step${i}`); if (i < n) el.className = 'step done'; else if (i === n) el.className = 'step active'; else el.className = 'step'; }); }
+
+    document.getElementById('rJenis').addEventListener('change', () => setStep(1));
+    document.getElementById('rNama').addEventListener('input', () => setStep(2));
+    document.querySelectorAll('input[name="rp"]').forEach(cb => cb.addEventListener('change', () => setStep(3)));
+
+    document.getElementById('reqForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+      const params = Array.from(document.querySelectorAll('input[name="rp"]:checked')).map(c => c.value);
+      const pLain = document.getElementById('rParamLain').value;
+      if (pLain) params.push(pLain);
+      if (params.length === 0) { showToast('Pilih minimal 1 parameter pengujian', 'error'); return; }
+
+      const noSampel = genNo();
+      // Use the entered tanggal masuk or current time
+      const tglMasukVal = document.getElementById('rTglMasuk').value;
+      const rec = {
+        id: Date.now().toString(36),
+        noSampel,
+        tanggal: tglMasukVal ? new Date(tglMasukVal).toISOString() : new Date().toISOString(),
+        jenis: document.getElementById('rJenis').value,
+        jumlah: document.getElementById('rJumlah').value,
+        volume: document.getElementById('rVolume').value,
+        suhuMasuk: document.getElementById('rSuhuMasuk').value || '',
+        requester: document.getElementById('rNama').value,
+        telp: document.getElementById('rTelp').value,
+        email: document.getElementById('rEmail').value,
+        keperluan: document.getElementById('rKeperluan').value,
+        alamat: document.getElementById('rAlamat').value,
+        parameter: params,
+        catatan: document.getElementById('rCatatan').value,
+        status: 'antrian', penerima: 'Menunggu Konfirmasi',
+        source: 'requester_portal',
+      };
+
+      const existing = JSON.parse(localStorage.getItem('ld_sampel') || '[]');
+      existing.push(rec);
+      localStorage.setItem('ld_sampel', JSON.stringify(existing));
+
+      const logs = JSON.parse(localStorage.getItem('ld_log') || '[]');
+      logs.unshift({ id: rec.id, ts: new Date().toISOString(), module: 'sampel', text: `[PORTAL] ${rec.jenis} dari ${rec.requester} — ${noSampel}`, user: 'Requester' });
+      localStorage.setItem('ld_log', JSON.stringify(logs));
+
+      setStep(3);
+      document.getElementById('displayNoSampel').textContent = noSampel;
+      document.getElementById('reqForm').style.display = 'none';
+      document.getElementById('successPanel').classList.add('show');
+      document.getElementById('successPanel').scrollIntoView({ behavior: 'smooth' });
+    });
+
+    function resetForm() {
+      document.getElementById('reqForm').reset();
+      document.querySelectorAll('input[name="rp"]').forEach(c => c.checked = false);
+      document.getElementById('reqForm').style.display = '';
+      document.getElementById('successPanel').classList.remove('show');
+      // Pre-fill datetime masuk with current time
+      const now = new Date();
+      now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+      const tglEl = document.getElementById('rTglMasuk');
+      if (tglEl) tglEl.value = now.toISOString().slice(0, 16);
+      setStep(1);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Auto-fill tanggal masuk on load
+    window.addEventListener('DOMContentLoaded', () => {
+      const now = new Date();
+      now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+      const tglEl = document.getElementById('rTglMasuk');
+      if (tglEl) tglEl.value = now.toISOString().slice(0, 16);
+    });
+  </script>
+</body>
+
+</html>
