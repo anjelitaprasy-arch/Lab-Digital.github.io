@@ -6,7 +6,7 @@
 // ============================================================
 // GOOGLE SHEETS CONFIG — paste your Apps Script URL here after deploying
 // ============================================================
-const SHEETS_URL = 'https://script.google.com/macros/s/AKfycbzYRx3tcHUx3V0ynnOaQ3imsDL3F_qlH6CS2EVimu46GhjAngILKOHbxsP65u0hgIK-Ig/exec'; // e.g. 'https://script.google.com/macros/s/AKfycbzYRx3tcHUx3V0ynnOaQ3imsDL3F_qlH6CS2EVimu46GhjAngILKOHbxsP65u0hgIK-Ig/exec'
+const SHEETS_URL = 'https://script.google.com/macros/s/AKfycby9mWjpAwqNd87HVHZeCgr-DngBM39iRQ0cp0FwwMUh/dev'; // e.g. 'https://script.google.com/macros/s/AKfycbzYRx3tcHUx3V0ynnOaQ3imsDL3F_qlH6CS2EVimu46GhjAngILKOHbxsP65u0hgIK-Ig/exec'
 
 async function postToSheet(module, row) {
 
